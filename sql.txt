@@ -1,0 +1,223 @@
+Server name -> . / localhost / (LOCAL) / Makina adı (EkremPC) / Bağlanılacak pc'nin IP adreside yazılabilir (192.168.1.8),  her makinenin yerel IP'si vardır o da (127.0.0.1)
+
+sa -> system administrator
+
+SSMS -> Sql Sever Managament Studio
+SSRS -> Sql Sever Reporting Services
+SSIS -> Sql Sever Integration Services
+SSAS -> Sql Sever Analysis Services
+
+# ----- Data Type ----------------------
+- bigint 		-> tam 8 byte uzunluğundaki int degerler, çok büyük sayısal değerler için
+- binary(50)		-> binary veriler icin kullanılır, True ve False alır
+- bit			-> binary veriler icin kullanılır, True ve False alır, örn: medeni durum, reşit olma 
+- char(10)		-> karakterler için kullanılır, 10 karekterlik yer tutuyor
+- date			-> sadece gün ay yıl tutar
+- datetime		-> gün ay yıl saat dakika tutar
+- int			-> +4 milyar -4 milyar arası değer alır
+- money			-> +922 milyar -922 milyar arası para birimi tutar
+- nchar			-> n harfi Latince alfabesi hariç diğer alfabeleri de desteklediği anlamına geliyor. Arap,Japon
+- nvarchar(50)		-> bellekte 50 karekterlik yer tutar ama ben ne kadar kullanıyorsam onu tutar gerisini tutmaz. Performans için
+- real			-> boyutu çok yüksek kesirli sayılar için
+- smallint		-> +32 bin -32 bin arasında değer tutar
+- smallmoney		-> +200 milyon -200 milyon arası para birimi tutar
+- tinyint		-> 0 ile 255 arasında değer alır
+- timestamp		-> kayıtların güncellemelerini tutuyor 
+
+
+# -------------------------------------------- SQL Komutları ------------------------------------------------------------------
+
+USE [Database adı] -> Hangi Veritabanını kullanacağını seçer 
+
+--------------- Veritabanı Manipülasyon Komutları -----------------
+
+. Create -> Bir veritabanı nesnesini oluşturur  -> CREATE INDEX (Index oluşturur) 
+	
+. Alter  -> Bir veritabanı nesnesinin özelliğini değiştirir -> ALTER TABLE (Bir tablonun özelliğini değiştirir)
+
+. Drop   -> Bir veritabanı nesnesini siler -> DROP INDEX (Index'i siler) 
+
+------------- Data Manipülasyon Komutları -----------------	       
+
+. Select	. Insert	. Update
+
+. Delete	. Truncate
+
+
+
+
+
+. Select   -> Veritabanındaki tablolardan kayıtları çeker	
+
+SELECT           -> SELECT * yazarsam tüm kolonlar gelir
+[KOLON1, KOLON2]
+FROM [TabloAdı]
+WHERE «ŞARTLAR»
+
+
+
+. Insert   -> Tabloya yeni kayıt ekler	
+
+INSERT INTO [TabloAdı]
+(Kolon1,Kolon2,Kolon3)
+VALUES
+(Deger1,Deger2,Deger3)
+
+
+
+. Update   -> Bir tablodaki 1 ya da daha fazla alanını günceller, değiştirir 	
+
+UPDATE [TabloAdi]
+SET [Column1=Value1, Column2=Value2....]
+WHERE «ŞARTLAR»
+
+
+
+. Delete   -> Bir tablodan kayıt siler, 2000 veri vardı diyelim DELETE ile tüm tabloyu sildik, daha sonra veri ekledik, ID 2001'den başlar 		
+
+DELETE
+FROM [Tabloadı]
+WHERE «ŞARTLAR»
+
+
+
+. Truncate -> Tablonun içini boşaltır, DELETE'den farkı ID 1'den baslar	
+
+TRUNCATE TABLE (TabloAdı)
+
+
+
+
+--------------------- WHERE Şartı -----------------------------
+
+SELECT
+[Kolon1,Kolon2,Kolon3........]  
+FROM [TabloAdı]
+WHERE «ŞARTLAR»
+
+
+=			Eşittir
+
+<>			Eşit değildir
+
+>			Büyüktür
+
+<			Küçüktür
+
+>=			Büyüktür ya da eşittir
+
+<=			Küçüktür ya da eşittir		-> WHERE BirtDate <= '2000-03-27'
+
+BETWEEN	->		Arasındadır			->  AGE BEETWEEN 20(dahil) AND 30(dahil)
+
+LIKE 	  ->		İle başlar, İle biter, İçerir	-> WHERE CustomerName LIKE 'Ömer%', LIKE '%Ömer', LIKE '%Ömer%'
+
+IN	  -> 		İçindedir			-> WHERE City IN ('LA','New York','Dallas')
+
+NOT LIKE  ->		İle başlamaz, İle bitmez, İçermez
+
+NOT IN	  ->		İçinde değildir
+
+
+
+# ---------------- Distinct Komutu --------------------
+
+- Tekrar eden satırları tekilleştirme amacıyla kullanılan bir komut.
+
+SELECT DISTINCT
+[kolon1,kolon2,kolon3]
+FROM [Tabloadı]
+WHERE «ŞARTLAR»
+
+SELECT DISTINCT [CİTY,DISTRICT]
+FROM [CUSTOMERS]			-> CUSTOMERS tablosundaki İstanbul'da kaç farklı district(ilçe) olduğunu görebiliriz
+WHERE [CİTY=' İSTANBUL']
+
+
+
+# ---------------- Orderby Komutu --------------------
+- Sıralama Komutu
+SELECT
+[kolon1,kolon2,kolon3]  -> Kolon adı yerine direkt 1 , 2 , 3 yazabiliriz -> 1. , 2. , 3. kolonu cagır anlamına geliyor (SELECT* olmalı)
+FROM [Tabloadı]
+WHERE «ŞARTLAR»
+ORDER BY [kolon1 ASC, kolon2 DESC]    -> ASC( A'dan Z'ye veya kücükten büyüğe sıralama), DSC( büyükten kücüğe sıralama)
+	[City DSC, Age ASC] -> önce City'e göre DSC sıralıyor, Aynı City varsa Age'i kücük olana göre(ASC) sıralıyor
+
+
+
+# ---------------- Top Komutu --------------------
+
+- Veri setinde dönen kayıtların bir kısmını görmek için kullanılır
+
+SELECT TOP [N sayısı]	 /   SELECT TOP [N sayısı] PERCENT									
+[kolon1,kolon2,kolon3]  
+FROM [Tabloadı]
+WHERE «ŞARTLAR»
+
+
+
+# ---------------- Groupby Komutu --------------------
+
+- AGGREGATE_FUNCTIONS ile kullanılırlar 
+
+SELECT
+SUM([Price]), COUNT([Price]), AVG([Price]), MAX([Price]), MIN([Price])
+FROM [TabloAdi] 
+GROUP BY [kolon1, kolon2]
+
+
+
+
+
+#------------------------------------------------ SQL Sever Fonksiyonları ---------------------------------------------------
+
+- DATEDIFF (YEAR, [1984-12-30], GETDATE() ) 		-> 2 Tarih arasındaki yıl farkını hesaplar, yaş hesaplama 	
+
+
+
+- AGGREGATE_FUNCTIONS
+
+SELECT
+SUM([Price]), COUNT([Price]), AVG([Price]), MAX([Price]), MIN([Price])
+FROM [TabloAdi] 
+
+SUM([Price]) -> Toplam ne kadar ciro yaptığımı hesaplarım
+MIN([Price]) -> Bir ürünü en ucuz kaca sattım 		   MAX([Price]) -> max kaca sattım 
+AVG([Price]) -> Bir ürünü ortalama hangi fiyattan sattım 
+COUNT([Price]) -> Kaç satırlık işlem gerçekleşti, kaç tane müşteri kaç tane barkot okutturdu
+
+
+
+
+- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

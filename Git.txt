@@ -1,0 +1,171 @@
+Git, versiyon kontrol sistemidir.
+
+- pwd  (güncel hangi dosyadasın)
+
+Komut İşlemleri
+- ls                        (nerdesin komutu)
+- ls -la                    (Gizli klasörleride gösterir)
+- cd []		            (gezme islemi)											
+- cd ..                     (geri gel)  [] şu parantezler yok kodda
+- mkdir [GitKursu]          (GitKursu adlı klasor oluştur) 
+- touch [not].txt           (not isimli txt dosyası oluştur) (.py, java vb her dosya olabilir)
+- rm [not].text             (not isimli txt dosyası sil) -> rm sadece dosyaları siliyor
+- rm -rf [GitKursu]         (GitKursu isimli klasörü sil)
+- git --version
+
+
+Kullanıcı adı ve e-mail girmek (daha sonra tekrar girip değiştirilebilir)
+- git config --global user.name "Ekrem Oncu"  			  # git config user.name
+- git config --global user.email muhammed.oncu_24@hotmail.com     # git config user.emails
+
+
+. Commit
+. Branch (dal)
+
+- git status                    (Güncel git durumunu gösteriyor)
+- git init			(Git'i bağlamak için, klasörde aktif etmek için)	
+
+- git add []
+- git add .                     ( Klasördeki bütün her şeyi ekler)
+
+- git commit -m "ornek ilkdefter created"    (" " ici mesaj, yazılması zorunlu)
+
+- git log 			(Git deposundaki commit geçmişini görüntülemek için kullanılır)
+
+- git commit -a ??????		(add ve commit tek satırda) 			
+
+
+# ----------------------------- Git ignore -------------------------------------------
+
+- touch .gitignore ( .gitignore diye bir dosya oluştur) (git bu dosyayı takip etmiyor, add'lemiyor ama pythonda falan kullanabilirsin)
+- Sublime Text'i aç, (.gitignore) dosyasına gidip hangi dosyayı ignore etmek istiyorsak içine o dosyanın adını yazıp save et.
+- Google'a gitignore template yaz, örneklere bak, neleri ignore etmişler bak, kendininki ile kıyasla 
+
+------------------------------------------------------------------------------------------
+- (HEAD -> master), master -> hangi branch'te olduğunu gösteriyor
+-> HEAD ise bizim git icersinde hangi konumda olduğumuzu gösteriyor, genelde son commit'i gösterir
+
+
+# ------------------------------- Branch -----------------------------------------------------
+- git branch			  (güncel branch'leri gösterir)
+- git branch [feature]		  (feature isimli yeni branch oluşturur)
+- git switch [feature / master]	  (featur'a geçer)
+
+
+# -------------------------------- Merge --------------------------------------------------------
+- master yolundan devam etmek istiyorsan, 
+- git switch master		(önce master'a gel)
+- git merge feature		(Merge branch feature)
+
+"Git fast-forward", birleştirmelerin (merge) gerçekleştiği bir senaryoda kullanılan bir terimdir. Normalde birleştirme işlemi 
+bir dalı başka bir dala birleştirirken, Git otomatik olarak birleştirme commit'i oluşturur. Ancak bazı durumlarda birleştirme işlemi "fast-forward" olarak gerçekleştirilebilir.
+Fast-forward birleştirme, birleştirilecek olan dalın hedef dal üzerinde herhangi bir ilerleme veya yeni birleşme işlemi yapmadan doğrudan ilerlemesi anlamına gelir. Birleştirme commit'i oluşturmadan geçiş yapmanızı sağlar.
+
+
+# --------------------------------- Stash --------------------------------------------------
+git deposunda yapılan değişiklikleri geçici olarak saklamak için kullanılan bir komuttur.
+- git stash		(stash yapıyoruz)
+- git stash pop		(geri cagırıyoruz, hemde list'den atıyor)
+- git stash apply 	(geri cagırıyoruz, hemde list'de tutuyor)
+- git stash list	(güncel stashları, zulaladıklarımı verir)
+- git stash apply []	(birden fazla stash yaparsak, istediğimiz stash'i çağırmak için kullanılır)
+- git stash clear	(bütün stash'ler silinir)
+
+
+# ---------------------------------- Geçmişe Dönme -----------------------------------------
+- git restore [giris.txt]		(giriş text dosyasını commit yapmadan önce, daha önceki haline getir) 
+- git checkout [hash bilgisi]		(önceki commit'lerden birine dönmek icin kullanılır)
+
+- git reset [hash bilgisi]		(önceki commit'lerden birine döndürür, Örneğin 6. committesin, 4'üncü commitin hash'ini yazdın,
+4'e döner, 6'ıncı ve 5'inci commiti siler ama dosyadaki(örnek : text.txt) değişiklikler kalır.)
+
+- git reset --hard [hash bilgisi]	(önceki commit'lerden birine döndürür, Örneğin 6. committesin, 4'üncü commitin hash'ini yazdın,
+4'e döner, 6'ıncı ve 5'inci commiti siler aynı zamanda dosyadaki(örnek : text) değişiklikleri de siler.)
+
+- git revert [hash bilgisi]		(önceki commit'lerden birini geri alır, Örneğin 4. committesin, 4'üncü commitin hash'ini yazdın,
+5. commit'i oluşturarak 4'teki değişiklikleri geri alır. Yani, 5. committesindir ve 1,2,3,5'deki değişiklikler kaydedilmiş olur, aynı zamanda 4. commit log'da var. Merge yaptığında log'lar tutmuş olucak.)
+
+
+# ------------------------------------- Diff ----------------------------------------------------------------------
+- git diff		(git diff komutu, çalışma dizininde yapılan değişiklikleri ve henüz kaydedilmemiş 
+değişiklikleri göstermek için kullanılan bir Git komutudur.)
+
+- git diff [commit1 commit2]  (Bu şekilde, farklı sürümler arasında hangi dosyaların değiştiğini ve bu dosyalardaki değişiklikleri görebilirsiniz. İki sürüm arasındaki farkları görmek için kullanılır. Burada <commit1> ve <commit2>, karşılaştırılacak olan sürümlerin kimlikleri (commit hash) veya referansları olmalıdır)
+
+- git diff HEAD 	(kaydedilmiş son commit (HEAD) ile çalışma dizinindeki değişiklikleri göstermek için kullanılır)
+
+- git diff master branch
+
+
+
+
+# -------------------------------------- Rebase ---------------------------------------------------------------------
+- git switch feat	(önce feat'e gel)
+- git rebase master	(önce master'lar sonra (branch)feat'ler şeklinde dizer. Hem de Log'ları temizler, hem tarihi tekrar yazar)
+
+
+
+
+
+
+
+
+
+
+
+
+
+# --------------------------------------- Github -------------------------------------------------
+- git remote add origin [url]		(origin bir komut değil, url'ye tanımlıyoruz, her seferinde url yazmıyoruz 1 kere yazmış oluyoruz, onun yerine origin'i kullanıyoruz)
+
+- git branch -m master		(-m, git branch komutuyla birlikte kullanıldığında, bir branch'ı yeniden adlandırmak için kullanılır.) 
+
+(Örneğin, (git branch -m master main) komutunu kullandığınızda, mevcut branch'ınızı "master" olan bir branch'ı "main" olarak yeniden adlandırmış olursunuz. Bu komut, yerel branch'ın adını değiştirir, ancak uzak sunucuda herhangi bir değişiklik yapmaz.)
+
+- git push -u origin master		(güncel commit'leri push ediyor github repositoriye atıyor, url'ye yolluyor)	
+
+(-u (veya --set-upstream), git push komutuyla birlikte kullanıldığında yerel branch'ın uzak sunucudaki branch ile ilişkilendirilmesini sağlar. Bu, yerel branch'ı uzak sunucudaki branch ile senkronize etmenin yanı sıra sonraki git push komutlarında sadece git push olarak kullanabilmenizi sağlar.)
+
+- git push
+
+- git remote  	->  origin (komutun çıktısı)
+
+- git push origin feat(branch ismi) 	(feat branch'i origine push yap)
+
+- git branch -r 			(uzak sunucudaki branch'ları listelemek için kullanılır. Bu komut, yereldeki branch'ları değil, sadece uzak sunucudaki branch'ları listeler.)
+
+- git fetch origin [master]		(uzak sunucudaki güncellemeleri yerel depoya indirmek için kullanılan bir Git komutudur. Bu komut yerel branch'ları güncellemez ancak uzak sunucudaki değişiklikleri kontrol etmenizi ve yerelde güncellemeleri entegre etmenizi sağlar.)
+
+- git pull origin [master] 		(git pull = git fetch + git merge) (git fetch ve git merge komutlarının birleşimidir ve uzak sunucudaki güncellemeleri alırken aynı zamanda yerel branch'ınızı da günceller.)
+(hemen git pull yapma, önce git fetch ile yerelde güncellemeleri entegre etmenin kendi projenle bir sıkıntı çıkarmadığına bak, sonra (git pull) kullan)
+
+- git checkout []			(remote branch'lere gecerken switch kullanamazsın. checkout olmalı)
+
+- git clone [depo_url]			(uzak(remote) bir Git deposunun(repo) bir kopyasını yerel makinenizde oluşturmak için kullanılır)
+- git clone [depo_url klasor_adi]	(Ayrıca, klonlanan depo için farklı bir klasör adı belirtmek için ikinci bir argüman olarak isteğe bağlı bir dizin adı sağlayabilirsiniz)
+
+
+# ------------- Fork -------------------------------
+
+"Fork", açık kaynaklı bir projenin, orijinal depodan (upstream repository) bağımsız bir kopyasının oluşturulması anlamına gelir. Fork işlemi, bir projenin kaynak koduna katkıda bulunmak, değişiklik yapmak veya projeyi kendi ihtiyaçlarınıza göre uyarlamak için kullanılır.
+
+Fork işlemi, projeyi orijinal haliyle koruyarak bağımsız bir çalışma alanı yaratır. Bu sayede fork yapılan projenin değişiklikler yapılabilir, iyileştirmeler eklenir veya farklı bir yöne taşınabilir.
+
+Fork işlemi yapıldığında orijinal projenin sahibi veya diğer katkıda bulunanlar fork edilen projenin değişikliklerini gözlemleyebilir ve bu değişiklikleri orijinal projeye dahil etme seçeneğine sahiptir. Böylece projeler arasında etkileşim ve işbirliği sağlanır.
+
+Fork işlemi, genellikle bir projeye katkıda bulunmak veya kendi bağımsız projenizi geliştirmek için kullanılan bir yöntemdir. Açık kaynak projelerde fork edilen projelerin daha sonra 
+"pull request" (bir değişiklik önerisinde bulunmak için gönderilen istek) ile orijinal projeye geri entegre edilebileceği ve katkı sağlanabileceği bir iş akışı oluşturulur.
+
+
+* github md cheat sheet
+
+
+
+
+
+
+
+
+
+
+
