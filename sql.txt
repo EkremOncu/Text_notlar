@@ -159,14 +159,26 @@ WHERE «ŞARTLAR»
 
 # ---------------- Groupby Komutu --------------------
 
-- AGGREGATE_FUNCTIONS ile kullanılırlar 
+- AGGREGATE_FUNCTIONS ile kullanılır.	
 
 SELECT
+[kolon1],
 SUM([Price]), COUNT([Price]), AVG([Price]), MAX([Price]), MIN([Price])
 FROM [TabloAdi] 
 GROUP BY [kolon1, kolon2]
 
+# EXAMPLE ----
 
+SELECT
+[CITY],
+
+MIN([Price]) AS [MinPrice], MAX([Price]) AS [MaxPrice],  AVG([Price]) AS [OrtalamaPrice],  COUNT([Price]) AS [Row_Count],  SUM([Price]) AS [TotalPrice]      -> Yeni kolonları adlandırmış olduk
+
+FROM [SALES] 
+
+GROUP BY [CITY]
+
+ORDER BY [SUM(TotalPrice)]
 
 
 
@@ -188,9 +200,10 @@ AVG([Price]) -> Bir ürünü ortalama hangi fiyattan sattım
 COUNT([Price]) -> Kaç satırlık işlem gerçekleşti, kaç tane müşteri kaç tane barkot okutturdu
 
 
+- Convert ()  -> Herhangi bir veri tipini alıp başka bir veri tipine dönüştürüyor
 
-
-- 
+CONVERT (DATE, [Date_]) -> Date_ kolonunun veri tipini DATE veri tipine dönüştürdü (Yıl-Ay-Gün)
+UPDATE [TabloAdı] SET [Date2]= CONVERT (DATE, [Date_]) -> TabloAdı tablosundaki Date2 sütünunu değiştirdi.
 
 
 
