@@ -7,7 +7,7 @@ SSRS -> Sql Sever Reporting Services
 SSIS -> Sql Sever Integration Services
 SSAS -> Sql Sever Analysis Services
 
-# ----- Data Type ----------------------
+# ---------- Data Type ----------------
 - bigint 		-> tam 8 byte uzunluğundaki int degerler, çok büyük sayısal değerler için
 - binary(50)		-> binary veriler icin kullanılır, True ve False alır
 - bit			-> binary veriler icin kullanılır, True ve False alır, örn: medeni durum, reşit olma 
