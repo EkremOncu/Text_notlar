@@ -44,9 +44,6 @@ USE [Database adı] -> Hangi Veritabanını kullanacağını seçer
 . Delete	. Truncate
 
 
-
-
-
 . Select   -> Veritabanındaki tablolardan kayıtları çeker	
 
 SELECT           -> SELECT * yazarsam tüm kolonlar gelir

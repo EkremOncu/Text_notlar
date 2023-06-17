@@ -97,8 +97,6 @@ değişiklikleri göstermek için kullanılan bir Git komutudur.)
 - git diff master branch
 
 
-
-
 # -------------------------------------- Rebase ---------------------------------------------------------------------
 - git switch feat	(önce feat'e gel)
 - git rebase master	(önce master'lar sonra (branch)feat'ler şeklinde dizer. Hem de Log'ları temizler, hem tarihi tekrar yazar)
@@ -110,12 +108,7 @@ değişiklikleri göstermek için kullanılan bir Git komutudur.)
 
 
 
-
-
-
-
-
-# --------------------------------------- Github -------------------------------------------------
+# ------------------------------------------------------------  GITHUB -----------------------------------------------------------------------------
 - git remote add origin [url]		(origin bir komut değil, url'ye tanımlıyoruz, her seferinde url yazmıyoruz 1 kere yazmış oluyoruz, onun yerine origin'i kullanıyoruz)
 
 - git branch -m master		(-m, git branch komutuyla birlikte kullanıldığında, bir branch'ı yeniden adlandırmak için kullanılır.) 
