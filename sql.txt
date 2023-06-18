@@ -9,20 +9,25 @@ SSAS -> Sql Sever Analysis Services
 
 # ---------- Data Type ----------------
 - bigint 		-> tam 8 byte uzunluğundaki int degerler, çok büyük sayısal değerler için
+- int			-> +2 milyar -2 milyar arası değer alır
+- smallint		-> +32 bin -32 bin arasında değer tutar
+- tinyint		-> 0 ile 255 arasında değer alır
+
 - binary(50)		-> binary veriler icin kullanılır, True ve False alır
 - bit			-> binary veriler icin kullanılır, True ve False alır, örn: medeni durum, reşit olma 
+- timestamp		-> kayıtların güncellemelerini tutuyor 
+
 - char(10)		-> karakterler için kullanılır, 10 karekterlik yer tutuyor
+- nchar			-> n harfi Latince alfabesi hariç diğer alfabeleri de desteklediği anlamına geliyor. Örn: Arap,Japon alfebeleri
+- nvarchar(50)		-> bellekte 50 karekterlik yer tutar ama ben ne kadar kullanıyorsam onu tutar gerisini tutmaz. Performans için
+
 - date			-> sadece gün ay yıl tutar
 - datetime		-> gün ay yıl saat dakika tutar
-- int			-> +4 milyar -4 milyar arası değer alır
+
 - money			-> +922 milyar -922 milyar arası para birimi tutar
-- nchar			-> n harfi Latince alfabesi hariç diğer alfabeleri de desteklediği anlamına geliyor. Arap,Japon
-- nvarchar(50)		-> bellekte 50 karekterlik yer tutar ama ben ne kadar kullanıyorsam onu tutar gerisini tutmaz. Performans için
-- real			-> boyutu çok yüksek kesirli sayılar için
-- smallint		-> +32 bin -32 bin arasında değer tutar
 - smallmoney		-> +200 milyon -200 milyon arası para birimi tutar
-- tinyint		-> 0 ile 255 arasında değer alır
-- timestamp		-> kayıtların güncellemelerini tutuyor 
+
+
 
 
 # -------------------------------------------- SQL Komutları ------------------------------------------------------------------
@@ -147,8 +152,8 @@ ORDER BY [kolon1 ASC, kolon2 DESC]    -> ASC( A'dan Z'ye veya kücükten büyü�
 
 - Veri setinde dönen kayıtların bir kısmını görmek için kullanılır
 
-SELECT TOP [N sayısı]	 /   SELECT TOP [N sayısı] PERCENT									
-[kolon1,kolon2,kolon3]  
+SELECT TOP [N sayısı] 	 /   SELECT TOP [N sayısı] PERCENT *									
+[kolon1,kolon2,kolon3]       FROM [Tabloadı]
 FROM [Tabloadı]
 WHERE «ŞARTLAR»
 
@@ -160,28 +165,49 @@ WHERE «ŞARTLAR»
 
 SELECT
 [kolon1],
-SUM([Price]), COUNT([Price]), AVG([Price]), MAX([Price]), MIN([Price])
+SUM([Price]), COUNT([Price]), AVG([Price]), MAX([Price]), MIN([Price])  # Price -> TabloAdi tablosundaki bir sütün	
 FROM [TabloAdi] 
 GROUP BY [kolon1, kolon2]
 
 # EXAMPLE ----
 
 SELECT
-[CITY],
+CITY,
 
-MIN([Price]) AS [MinPrice], MAX([Price]) AS [MaxPrice],  AVG([Price]) AS [OrtalamaPrice],  COUNT([Price]) AS [Row_Count],  SUM([Price]) AS [TotalPrice]      -> Yeni kolonları adlandırmış olduk
+MIN(PRICE) AS MinPrice, MAX(PRICE) AS MaxPrice,  AVG(PRICE) AS OrtalamaPrice,  COUNT(PRICE) AS Row_Count,  SUM(PRICE) AS TotalPrice      -> Yeni kolonları adlandırmış olduk
 
-FROM [SALES] 
+FROM SALES 
 
-GROUP BY [CITY]
+GROUP BY CITY
 
-ORDER BY [SUM(TotalPrice)]
+ORDER BY SUM(PRICE)
+
+
+- HAVING komutu -> SQL sorgularında gruplama yapıldıktan sonra gruplar üzerinde koşulları kontrol etmek için kullanılır. HAVING komutu, GROUP BY ifadesiyle birlikte kullanılır ve gruplar üzerinde filtreleme yapmak için kullanılır.
+
+SELECT [Country], COUNT(*) AS Total
+FROM [Customers]
+GROUP BY [Country]
+HAVING COUNT(*) > 5;
+
+Yukarıdaki örnekte, Customers tablosundaki müşterileri ülkelerine göre gruplayarak her bir ülkenin müşteri sayısını hesaplarız. Ardından, 
+HAVING komutu ile müşteri sayısı 5'ten büyük olan grupları filtreleyerek sonucu döndürürüz.
+
+
+SELECT column1, column2, ...
+FROM table
+WHERE conditions
+GROUP BY column1, column2, ...
+HAVING conditions;
+
+Not: HAVING komutunu kullanırken dikkat etmeniz gereken nokta, HAVING koşullarının gruplama sonuçlarına uygulanmasıdır, 
+bu yüzden HAVING ifadesinde gruplama sonuçlarına dayalı bir filtreleme yapmanız gerekmektedir.
 
 
 
 #------------------------------------------------ SQL Sever Fonksiyonları ---------------------------------------------------
 
-- DATEDIFF (YEAR, [1984-12-30], GETDATE() ) 		-> 2 Tarih arasındaki yıl farkını hesaplar, yaş hesaplama 	
+- DATEDIFF (YEAR, ['1984-12-30'], GETDATE() ) as dift		-> 2 Tarih arasındaki yıl farkını hesaplar, yaş hesaplama 	
 
 
 
@@ -206,7 +232,7 @@ UPDATE [TabloAdı] SET [Date2]= CONVERT (DATE, [Date_]) -> TabloAdı tablosundak
 
 
 
-
+#-------------------------------------------- İlişkisel Veri Tabanı Kavramı ---------------------------------------------------
 
 
 
