@@ -161,6 +161,9 @@ WHERE «ŞARTLAR»
 
 # ---------------- Groupby Komutu --------------------
 
+
+- DISTINCT fonksiyonun alternatifi olarak kullanılabilir
+- Tekrar edenleri getirmez
 - AGGREGATE_FUNCTIONS ile kullanılır.	
 
 SELECT
@@ -221,6 +224,7 @@ SUM([Price]) -> Toplam ne kadar ciro yaptığımı hesaplarım
 MIN([Price]) -> Bir ürünü en ucuz kaca sattım 		   MAX([Price]) -> max kaca sattım 
 AVG([Price]) -> Bir ürünü ortalama hangi fiyattan sattım 
 COUNT([Price]) -> Kaç satırlık işlem gerçekleşti, kaç tane müşteri kaç tane barkot okutturdu
+COUNT(DISTINCT [Price]) -> Tekrar edenleri almıyor
 
 
 - Convert ()  -> Herhangi bir veri tipini alıp başka bir veri tipine dönüştürüyor
@@ -234,18 +238,46 @@ UPDATE [TabloAdı] SET [Date2]= CONVERT (DATE, [Date_]) -> TabloAdı tablosundak
 
 #-------------------------------------------- İlişkisel Veri Tabanı Kavramı ---------------------------------------------------
 
+- Composite key  -> Bir tablodaki bir veya daha fazla sütunun birleşimini kullanarak bir satırı benzersiz olarak tanımlayan bir anahtar türüdür. Birleşik anahtarlar tek bir sütunun yetersiz olduğu durumlarda kullanılır. 
+* Many-to-many ilişki  -> Bir veritabanı modelinde iki tablo arasındaki ilişkiyi ifade eden bir terimdir. Bu ilişki, birincil tablodaki bir kaydın ikincil tablodaki bir veya daha fazla kayıtla ilişkilendirilebileceği durumlarda kullanılır.
+
+- Foreign key
+* One-to-many ilişki
+
+
+#-------------------------------------------- 2 Tabloyu Birleştirme ---------------------------------------------------
+SELECT [u.*, a.Addresstext]				        SELECT [Users.*],[Address.Addresstext]
+										
+FROM								FROM
+Users u, Adress a  	-> Kısaltma				[Users],[Adress]   -> Tablo adları
+
+WHERE u.ID = a.UserID  AND  u.ID = 4		   		WHERE Users.ID = Address.UserID  AND  Users.ID = 4
+
+
+#-------------------------------------------- 2'den fazla Tabloyu Birleştirme ---------------------------------------------------
+
+SELECT [Users.*],[Address.Addresstext],[Countries.Country],[Cities.City]  
+								-> Countries (Tablo) , Country (Countries tablosunundan bir kolon)
+										
+FROM
+[Users], [Adress], [Countries], [Cities]   -> Tablo adları
+
+WHERE Users.ID = Address.UserID  AND  Users.ID = 4 AND Cities.ID = Countries.ID 
 
 
 
+#-------------------------------------------- JOIN ---------------------------------------------------
+- LEFT JOIN		- FULL JOIN
+- RIGHT JOIN		- INNER JOIN (JOIN)
 
 
+SELECT
+A.Kolon1, A.Kolon2, B.Kolon3, B.Kolon4
+						
+FROM 
+Tablo1 A  
 
-
-
-
-
-
-
+JOIN  Tablo2 B  ON  A.PK_Kolon = B.FK_Kolon		(PK -> Primary Key	FK -> Foreign Key)
 
 
 
