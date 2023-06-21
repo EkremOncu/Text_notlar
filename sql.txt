@@ -7,6 +7,12 @@ SSRS -> Sql Sever Reporting Services
 SSIS -> Sql Sever Integration Services
 SSAS -> Sql Sever Analysis Services
 
+
+SET STATİSTICS I0 ON 	-> Mevcut oturumda yürütülen her sorgu için giriş/çıkış istatistiklerinin görüntülenmesini için kullanılır. 
+			Bu seçenek etkinleştirildiğinde SQL Server, bir sorgu tarafından gerçekleştirilen mantıksal ve fiziksel disk okumaları hakkında bilgi sağlar.
+			-> Page sayısını verir (her page 8 kb(kilo byte) )
+
+
 # ---------- Data Type ----------------
 - bigint 		-> tam 8 byte uzunluğundaki int degerler, çok büyük sayısal değerler için
 - int			-> +2 milyar -2 milyar arası değer alır
@@ -143,8 +149,8 @@ SELECT
 [kolon1,kolon2,kolon3]  -> Kolon adı yerine direkt 1 , 2 , 3 yazabiliriz -> 1. , 2. , 3. kolonu cagır anlamına geliyor (SELECT* olmalı)
 FROM [Tabloadı]
 WHERE «ŞARTLAR»
-ORDER BY [kolon1 ASC, kolon2 DESC]    -> ASC( A'dan Z'ye veya kücükten büyüğe sıralama), DSC( büyükten kücüğe sıralama)
-	[City DSC, Age ASC] -> önce City'e göre DSC sıralıyor, Aynı City varsa Age'i kücük olana göre(ASC) sıralıyor
+ORDER BY [kolon1 ASC, kolon2 DESC]    	-> ASC( A'dan Z'ye veya kücükten büyüğe sıralama), DSC( büyükten kücüğe sıralama)
+	[City DSC, Age ASC] 	   	-> önce City'e göre DSC sıralıyor, Aynı City varsa Age'i kücük olana göre(ASC) sıralıyor
 
 
 
@@ -186,7 +192,8 @@ GROUP BY CITY
 ORDER BY SUM(PRICE)
 
 
-- HAVING komutu -> SQL sorgularında gruplama yapıldıktan sonra gruplar üzerinde koşulları kontrol etmek için kullanılır. HAVING komutu, GROUP BY ifadesiyle birlikte kullanılır ve gruplar üzerinde filtreleme yapmak için kullanılır.
+- HAVING komutu      -> SQL sorgularında gruplama yapıldıktan sonra gruplar üzerinde koşulları kontrol etmek için kullanılır. HAVING komutu, 
+			GROUP BY ifadesiyle birlikte kullanılır ve gruplar üzerinde filtreleme yapmak için kullanılır.
 
 SELECT [Country], COUNT(*) AS Total
 FROM [Customers]
@@ -210,8 +217,8 @@ bu yüzden HAVING ifadesinde gruplama sonuçlarına dayalı bir filtreleme yapma
 
 #------------------------------------------------ SQL Sever Fonksiyonları ---------------------------------------------------
 
-- DATEDIFF (YEAR, ['1984-12-30'], GETDATE() ) as dift		-> 2 Tarih arasındaki yıl farkını hesaplar, yaş hesaplama 	
-
+- DATEDIFF (YEAR, ['1984-12-30'], GETDATE()) as yilFarki	-> 2 Tarih arasındaki yıl farkını hesaplar, yaş hesaplama 	
+- DATEDIFF (HOUR, [ORDERS.DATE_], [PAYMENTS.DATE_])		-> 2 Tarih arasındaki saat farkını hesaplar. 
 
 
 - AGGREGATE_FUNCTIONS
@@ -227,19 +234,37 @@ COUNT([Price]) -> Kaç satırlık işlem gerçekleşti, kaç tane müşteri kaç
 COUNT(DISTINCT [Price]) -> Tekrar edenleri almıyor
 
 
-- Convert ()  -> Herhangi bir veri tipini alıp başka bir veri tipine dönüştürüyor
+- CONVERT ()  -> Herhangi bir veri tipini alıp başka bir veri tipine dönüştürüyor
 
 CONVERT (DATE, [Date_]) -> Date_ kolonunun veri tipini DATE veri tipine dönüştürdü (Yıl-Ay-Gün)
 UPDATE [TabloAdı] SET [Date2]= CONVERT (DATE, [Date_]) -> TabloAdı tablosundaki Date2 sütünunu değiştirdi.
 
 
 
+- DATEPART (MONTH, [Date]) -> Tarih saat fonksiyonudur. Tarih türündeki herhangi bir değerin icersinden sadece ay değerini getirir
+
+- CASE WHEN 	->
+
+DATEPART (MONTH, [Date]) AS Ay
+
+CASE
+	WHEN DATEPART (MONTH, [Date]) = 1 THEN 'Ocak'
+	WHEN DATEPART (MONTH, [Date]) = 2 THEN 'Subat'
+	WHEN DATEPART (MONTH, [Date]) = 3 THEN 'Mart'
+			"
+			"
+			"
+END  AS AyAdı
+
 
 
 #-------------------------------------------- İlişkisel Veri Tabanı Kavramı ---------------------------------------------------
 
-- Composite key  -> Bir tablodaki bir veya daha fazla sütunun birleşimini kullanarak bir satırı benzersiz olarak tanımlayan bir anahtar türüdür. Birleşik anahtarlar tek bir sütunun yetersiz olduğu durumlarda kullanılır. 
-* Many-to-many ilişki  -> Bir veritabanı modelinde iki tablo arasındaki ilişkiyi ifade eden bir terimdir. Bu ilişki, birincil tablodaki bir kaydın ikincil tablodaki bir veya daha fazla kayıtla ilişkilendirilebileceği durumlarda kullanılır.
+- Composite key 	 -> Bir tablodaki bir veya daha fazla sütunun birleşimini kullanarak bir satırı benzersiz olarak tanımlayan bir anahtar türüdür. 
+			  Birleşik anahtarlar tek bir sütunun yetersiz olduğu durumlarda kullanılır.
+			   
+* Many-to-many ilişki  	  -> Bir veritabanı modelinde iki tablo arasındaki ilişkiyi ifade eden bir terimdir. Bu ilişki, birincil tablodaki 
+			  bir kaydın ikincil tablodaki bir veya daha fazla kayıtla ilişkilendirilebileceği durumlarda kullanılır.
 
 - Foreign key
 * One-to-many ilişki
@@ -280,12 +305,40 @@ Tablo1 A
 JOIN  Tablo2 B  ON  A.PK_Kolon = B.FK_Kolon		(PK -> Primary Key	FK -> Foreign Key)
 
 
+(ETRADE 4) JOIN ORNEK
+----------------------------------------- 
+select
+U.USERNAME_, U.NAMESURNAME, C.CITY, T.TOWN, D.DISTRICT, O.USERID, O.DATE_ AS SIPARISTARIHI, O.TOTALPRICE, P.DATE_ AS ODEMETARIHI, P.APPROVECODE, I.DATE_ as FATURATARIHI, I.CARGOFICHENO
+
+FROM   
+ORDERS AS O
+
+JOIN USERS U ON O.ID = U.ID  
+JOIN ADDRESS A ON O.ADDRESSID = A.ID
+JOIN CITIES C ON C.ID = A.CITYID
+JOIN TOWNS T ON T.ID = A.TOWNID
+JOIN DISTRICTS D ON D.ID = A.DISTRICTID
+JOIN PAYMENTS P ON P.ORDERID = O.ID
+JOIN INVOICES I ON I.ORDERID = O.ID 
+-----------------------------------------
 
 
+#-------------------------------------------- SUBQUERY ---------------------------------------------------
+- Select icinde Select, Alt sorgu
+- Olabiliyorsa JOIN kullanılmalı, yoksa Subquery kullanılan sorguların sayısı az olmalı
+
+SELECT 
+
+ITM.ITEMCODE AS URUNKODU, ITM.ITEMNAME AS URUNADI,
 
 
+(SELECT MIN(UNITPRICE) FROM ORDERDETAILS WHERE ITEMID-ITM.ID) AS ENDUSUKFIYAT,
+(SELECT MAX(UNITPRICE) FROM ORDERDETAILS WHERE ITEMID-ITM.ID) AS ENYUKSEKFIYAT,
+(SELECT AVG(UNITPRICE) FROM ORDERDETAILS WHERE ID) 	      AS ORTALAMAFIYAT,
+(SELECT SUM(AMOUNT) FROM ORDERDETAILS WHERE ITEMID-ITM. ID)   AS TOPLAMADET
+)
 
+FROM ITEMS AS ITM
 
-
-
+ORDER BY  ITM.ITEMNAME
 
